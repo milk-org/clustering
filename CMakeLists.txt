@@ -5,10 +5,29 @@ message(" SRCNAME = ${SRCNAME} -> LIBNAME = ${LIBNAME}")
 
 # list source files (.c) other than modulename.c
 set(SOURCEFILES
+	cubecluster.c
+	CFmeminit.c
+	CFtree_rebuild.c
+	addvector_to_CF.c
+	compute_imdistance_double.c
+	condense.c
+	create_new_leaf.c
+	ctree_init.c
+	ctree_memallocate.c
+	ctree_memfree.c
+	droptree.c
+	get_availableCFindex.c
+	leaf_addentry.c
+	leafnode_attachleaf.c
+	node_attachnode.c
+	printCFtree.c
+	split_CF_node.c
+	update_level.c
 	)
 
 # list include files (.h) that should be installed on system
 set(INCLUDEFILES
+	cubecluster.h
 	)
 
 # list scripts that should be installed on system

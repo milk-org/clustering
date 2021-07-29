@@ -28,7 +28,7 @@
 
 #include "CommandLineInterface/CLIcore.h"
 
-
+#include "cubecluster.h"
 
 
 
@@ -56,8 +56,7 @@ INIT_MODULE_LIB(clustering)
 static errno_t init_module_CLI()
 {
 
-    //CLIADDCMD_clustering__test();
-
+    CLIADDCMD_clustering__imcube_mkcluster();
 
     // add atexit functions here
 
