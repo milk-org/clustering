@@ -19,6 +19,7 @@ set(SOURCEFILES
 	get_availableCFindex.c
 	leaf_addentry.c
 	leafnode_attachleaf.c
+	mindiffscan.c
 	node_attachnode.c
 	printCFtree.c
 	split_CF_node.c
