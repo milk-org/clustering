@@ -29,7 +29,7 @@
 #include "CommandLineInterface/CLIcore.h"
 
 #include "cubecluster.h"
-
+#include "mindiffscan.h"
 
 
 /* ================================================================== */
@@ -57,6 +57,8 @@ static errno_t init_module_CLI()
 {
 
     CLIADDCMD_clustering__imcube_mkcluster();
+
+    CLIADDCMD_clustering__imcube_mindiffscan();
 
     // add atexit functions here
 
