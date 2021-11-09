@@ -44,12 +44,12 @@ static CLICMDARGDEF farg[] =
     {
         CLIARG_IMG, ".in_name", "input image cube", "imc1",
         CLIARG_VISIBLE_DEFAULT,
-        (void **) &farg_inimname
+        (void **) &farg_inimname, NULL
     },
     {
         CLIARG_STR, ".outdname", "output directory name", "outd",
         CLIARG_VISIBLE_DEFAULT,
-        (void **) &farg_outdname
+        (void **) &farg_outdname, NULL
     }
 };
 
