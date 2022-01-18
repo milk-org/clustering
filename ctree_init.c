@@ -2,7 +2,6 @@
 #include "CommandLineInterface/CLIcore.h"
 #include "clustering_defs.h"
 
-
 /**
  * @brief Initialize CF tree with first vector
  *
@@ -10,11 +9,7 @@
  * @param datavector
  * @return errno_t
  */
-errno_t ctree_init(
-    CLUSTERTREE *ctree,
-    double *datavector,
-    long double ssqr
-)
+errno_t ctree_init(CLUSTERTREE *ctree, double *datavector, long double ssqr)
 {
     DEBUG_TRACE_FSTART();
 
@@ -44,9 +39,9 @@ errno_t ctree_init(
     ctree->CFarray[2].NBleaf = 0;
     ctree->CFarray[2].N = 1;
 
-    memcpy(ctree->CFarray[0].datasumvec, datavector, sizeof(double)*ctree->npix);
-    memcpy(ctree->CFarray[1].datasumvec, datavector, sizeof(double)*ctree->npix);
-    memcpy(ctree->CFarray[2].datasumvec, datavector, sizeof(double)*ctree->npix);
+    memcpy(ctree->CFarray[0].datasumvec, datavector, sizeof(double) * ctree->npix);
+    memcpy(ctree->CFarray[1].datasumvec, datavector, sizeof(double) * ctree->npix);
+    memcpy(ctree->CFarray[2].datasumvec, datavector, sizeof(double) * ctree->npix);
     ctree->CFarray[0].datassq = ssqr;
     ctree->CFarray[1].datassq = ssqr;
     ctree->CFarray[2].datassq = ssqr;
@@ -60,5 +55,3 @@ errno_t ctree_init(
     DEBUG_TRACE_FEXIT();
     return RETURN_SUCCESS;
 }
-
-

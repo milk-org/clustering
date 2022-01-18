@@ -2,8 +2,8 @@
 #include "CommandLineInterface/CLIcore.h"
 #include "clustering_defs.h"
 
-#include "get_availableCFindex.h"
 #include "CFmeminit.h"
+#include "get_availableCFindex.h"
 
 // log all debug trace points to file
 #define DEBUGLOG
@@ -17,19 +17,12 @@
  * @param CFindex
  * @return errno_t
  */
-errno_t create_new_leaf(
-    CLUSTERTREE *ctree,
-    double *datarray,
-    long double ssqr,
-    long *CFindex
-)
+errno_t create_new_leaf(CLUSTERTREE *ctree, double *datarray, long double ssqr, long *CFindex)
 {
     DEBUG_TRACE_FSTART();
 
     long CFi;
-    FUNC_CHECK_RETURN(
-        get_availableCFindex(ctree, &CFi)
-    );
+    FUNC_CHECK_RETURN(get_availableCFindex(ctree, &CFi));
 
     CFmeminit(ctree, CFi, CFMEMINIT_CFUPDATE);
 
@@ -37,7 +30,7 @@ errno_t create_new_leaf(
     ctree->CFarray[CFi].level = -1;
     ctree->CFarray[CFi].parentindex = -1;
     ctree->CFarray[CFi].N = 1;
-    memcpy(ctree->CFarray[CFi].datasumvec, datarray, sizeof(double)*ctree->npix);
+    memcpy(ctree->CFarray[CFi].datasumvec, datarray, sizeof(double) * ctree->npix);
     ctree->CFarray[CFi].datassq = ssqr;
 
     ctree->CFarray[CFi].sum2 = ssqr;

@@ -3,10 +3,6 @@
 
 #define CFMEMINIT_CFUPDATE 0x0001
 
-errno_t CFmeminit(
-    CLUSTERTREE *ctree,
-    long CFindex,
-    uint32_t mode
-);
+errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode);
 
 #endif

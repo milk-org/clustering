@@ -4,41 +4,37 @@
 
 #include "CFmeminit.h"
 
-errno_t ctree_memallocate(
-    CLUSTERTREE *ctree
-)
+errno_t ctree_memallocate(CLUSTERTREE *ctree)
 {
     // Allocate memory for CFs
     DEBUG_TRACE_FSTART();
 
-    printf("Allocating CF memory. %ld CFs, size = %ld bytes\n",
-           ctree->NBCF,
-           (long) sizeof(double)*ctree->npix*ctree->NBCF
-          );
+    printf("Allocating CF memory. %ld CFs, size = %ld bytes\n", ctree->NBCF,
+           (long)sizeof(double) * ctree->npix * ctree->NBCF);
 
-    ctree->CFarray = (CLUSTERING_CF *) malloc(sizeof(CLUSTERING_CF) * ctree->NBCF);
-    if(ctree->CFarray == NULL)
+    ctree->CFarray = (CLUSTERING_CF *)malloc(sizeof(CLUSTERING_CF) * ctree->NBCF);
+    if (ctree->CFarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
     }
 
-    for(long CFindex=0; CFindex<ctree->NBCF; CFindex++)
+    for (long CFindex = 0; CFindex < ctree->NBCF; CFindex++)
     {
 
-        ctree->CFarray[CFindex].childindex = (long *) malloc(sizeof(long)*(ctree->B+1));
-        if(ctree->CFarray[CFindex].childindex == NULL)
+        ctree->CFarray[CFindex].childindex = (long *)malloc(sizeof(long) * (ctree->B + 1));
+        if (ctree->CFarray[CFindex].childindex == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }
 
-        ctree->CFarray[CFindex].leafindex = (long *) malloc(sizeof(long)*(ctree->L+1));
-        if(ctree->CFarray[CFindex].leafindex == NULL)
+        ctree->CFarray[CFindex].leafindex = (long *)malloc(sizeof(long) * (ctree->L + 1));
+        if (ctree->CFarray[CFindex].leafindex == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }
 
-        ctree->CFarray[CFindex].datasumvec = (double *) malloc(sizeof(double)*ctree->npix);
-        if(ctree->CFarray[CFindex].datasumvec == NULL)
+        ctree->CFarray[CFindex].datasumvec = (double *)malloc(sizeof(double) * ctree->npix);
+        if (ctree->CFarray[CFindex].datasumvec == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }
@@ -50,4 +46,3 @@ errno_t ctree_memallocate(
     DEBUG_TRACE_FEXIT();
     return RETURN_SUCCESS;
 }
-

@@ -5,32 +5,24 @@
  *
  */
 
-
-
 // module default short name
 // all CLI calls to this module functions will be <shortname>.<funcname>
 // if set to "", then calls use <funcname>
 #define MODULE_SHORTNAME_DEFAULT "clustering"
 
 // Module short description
-#define MODULE_DESCRIPTION      "Cluster images and data"
+#define MODULE_DESCRIPTION "Cluster images and data"
 
-
-
-
-
-#include <stdint.h>
-#include <string.h>
 #include <malloc.h>
 #include <math.h>
+#include <stdint.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 #include "CommandLineInterface/CLIcore.h"
 
 #include "cubecluster.h"
 #include "mindiffscan.h"
-
 
 /* ================================================================== */
 /* ================================================================== */
@@ -43,16 +35,6 @@
 //
 INIT_MODULE_LIB(clustering)
 
-
-
-
-
-
-
-
-
-
-
 static errno_t init_module_CLI()
 {
 
@@ -64,7 +46,3 @@ static errno_t init_module_CLI()
 
     return RETURN_SUCCESS;
 }
-
-
-
-
