@@ -17,7 +17,10 @@
  * @param CFindex
  * @return errno_t
  */
-errno_t create_new_leaf(CLUSTERTREE *ctree, double *datarray, long double ssqr, long *CFindex)
+errno_t create_new_leaf(CLUSTERTREE *ctree,
+                        double      *datarray,
+                        long double  ssqr,
+                        long        *CFindex)
 {
     DEBUG_TRACE_FSTART();
 
@@ -26,11 +29,13 @@ errno_t create_new_leaf(CLUSTERTREE *ctree, double *datarray, long double ssqr, 
 
     CFmeminit(ctree, CFi, CFMEMINIT_CFUPDATE);
 
-    ctree->CFarray[CFi].type = CLUSTER_CF_TYPE_LEAF;
-    ctree->CFarray[CFi].level = -1;
+    ctree->CFarray[CFi].type        = CLUSTER_CF_TYPE_LEAF;
+    ctree->CFarray[CFi].level       = -1;
     ctree->CFarray[CFi].parentindex = -1;
-    ctree->CFarray[CFi].N = 1;
-    memcpy(ctree->CFarray[CFi].datasumvec, datarray, sizeof(double) * ctree->npix);
+    ctree->CFarray[CFi].N           = 1;
+    memcpy(ctree->CFarray[CFi].datasumvec,
+           datarray,
+           sizeof(double) * ctree->npix);
     ctree->CFarray[CFi].datassq = ssqr;
 
     ctree->CFarray[CFi].sum2 = ssqr;

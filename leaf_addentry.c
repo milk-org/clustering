@@ -16,7 +16,11 @@
  * @param lCFindex
  * @return errno_t
  */
-errno_t leaf_addentry(CLUSTERTREE *ctree, double *datavec, long double ssqr, long lCFindex, int *addOK)
+errno_t leaf_addentry(CLUSTERTREE *ctree,
+                      double      *datavec,
+                      long double  ssqr,
+                      long         lCFindex,
+                      int         *addOK)
 {
     DEBUG_TRACE_FSTART();
 

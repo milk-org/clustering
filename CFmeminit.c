@@ -17,7 +17,7 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
         if (cfi != -1)
         { // remove from list of childred or leafs
             long NBchild = ctree->CFarray[cfi].NBchild;
-            int found = 0;
+            int  found   = 0;
             for (int chi = 0; chi < NBchild; chi++)
             {
                 if (ctree->CFarray[cfi].childindex[chi] == CFindex)
@@ -26,7 +26,8 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
                 }
                 if (found == 1)
                 {
-                    ctree->CFarray[cfi].childindex[chi] = ctree->CFarray[cfi].childindex[chi + 1];
+                    ctree->CFarray[cfi].childindex[chi] =
+                        ctree->CFarray[cfi].childindex[chi + 1];
                 }
             }
             if (found == 1)
@@ -35,7 +36,7 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
             }
 
             long NBleaf = ctree->CFarray[cfi].NBleaf;
-            found = 0;
+            found       = 0;
             for (int li = 0; li < NBleaf; li++)
             {
                 if (ctree->CFarray[cfi].leafindex[li] == CFindex)
@@ -44,7 +45,8 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
                 }
                 if (found == 1)
                 {
-                    ctree->CFarray[cfi].leafindex[li] = ctree->CFarray[cfi].leafindex[li + 1];
+                    ctree->CFarray[cfi].leafindex[li] =
+                        ctree->CFarray[cfi].leafindex[li + 1];
                 }
             }
             if (found == 1)
@@ -60,15 +62,18 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
 
             ctree->CFarray[cfi].status |= CLUSTER_CF_STATUS_UPDATE;
 
-            subvector_to_CF(ctree, ctree->CFarray[CFindex].datasumvec, ctree->CFarray[CFindex].datassq,
-                            ctree->CFarray[CFindex].N, cfi);
+            subvector_to_CF(ctree,
+                            ctree->CFarray[CFindex].datasumvec,
+                            ctree->CFarray[CFindex].datassq,
+                            ctree->CFarray[CFindex].N,
+                            cfi);
 
             // move upstream to propagate change
             cfi = ctree->CFarray[cfi].parentindex;
         }
     }
 
-    ctree->CFarray[CFindex].type = CLUSTER_CF_TYPE_UNUSED;
+    ctree->CFarray[CFindex].type  = CLUSTER_CF_TYPE_UNUSED;
     ctree->CFarray[CFindex].level = 0;
 
     ctree->CFarray[CFindex].NBchild = 0;
@@ -90,10 +95,10 @@ errno_t CFmeminit(CLUSTERTREE *ctree, long CFindex, uint32_t mode)
         ctree->CFarray[CFindex].datasumvec[ii] = 0.0;
     }
 
-    ctree->CFarray[CFindex].sum2 = 0.0;
+    ctree->CFarray[CFindex].sum2    = 0.0;
     ctree->CFarray[CFindex].datassq = 0.0;
     ctree->CFarray[CFindex].radius2 = 0;
-    ctree->CFarray[CFindex].N = 0;
+    ctree->CFarray[CFindex].N       = 0;
 
     ctree->CFarray[CFindex].status = 0;
 

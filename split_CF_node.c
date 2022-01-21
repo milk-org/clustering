@@ -36,7 +36,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
 
     // compute distances within leaf node
     double maxdist = 0.0;
-    int maxdistindex0, maxdistindex1;
+    int    maxdistindex0, maxdistindex1;
 
     long nCF; // number of CF entries to split
     switch (ctree->CFarray[CFindex].type)
@@ -50,10 +50,11 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
         break;
 
     default:
-        FUNC_RETURN_FAILURE("type = %d not valid", ctree->CFarray[CFindex].type);
+        FUNC_RETURN_FAILURE("type = %d not valid",
+                            ctree->CFarray[CFindex].type);
     }
 
-    long *subCFarray = (long *)malloc(sizeof(long) * nCF);
+    long *subCFarray = (long *) malloc(sizeof(long) * nCF);
     if (subCFarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
@@ -73,7 +74,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
         }
     }
 
-    double *distarray = (double *)malloc(sizeof(double) * nCF * nCF);
+    double *distarray = (double *) malloc(sizeof(double) * nCF * nCF);
     if (distarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
@@ -82,18 +83,22 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     for (int index0 = 0; index0 < nCF; index0++)
     {
         distarray[index0 * nCF + index0] = 0.0;
-        long CFindex00 = subCFarray[index0];
+        long CFindex00                   = subCFarray[index0];
         for (int index1 = index0 + 1; index1 < nCF; index1++)
         {
-            long CFindex11 = subCFarray[index1];
+            long   CFindex11 = subCFarray[index1];
             double distval;
             FUNC_CHECK_RETURN(
-                compute_imdistance_double(ctree, ctree->CFarray[CFindex00].datasumvec, ctree->CFarray[CFindex00].N,
-                                          ctree->CFarray[CFindex11].datasumvec, ctree->CFarray[CFindex11].N, &distval));
+                compute_imdistance_double(ctree,
+                                          ctree->CFarray[CFindex00].datasumvec,
+                                          ctree->CFarray[CFindex00].N,
+                                          ctree->CFarray[CFindex11].datasumvec,
+                                          ctree->CFarray[CFindex11].N,
+                                          &distval));
             DEBUG_TRACEPOINT("DIST %02d %02d  %g\n", index0, index1, distval);
             if (distval > maxdist)
             {
-                maxdist = distval;
+                maxdist       = distval;
                 maxdistindex0 = index0;
                 maxdistindex1 = index1;
             }
@@ -104,9 +109,13 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     }
 
     // use max distance pair to split
-    DEBUG_TRACEPOINT("MAX dist within node: %d - %d = %g", maxdistindex0, maxdistindex1, maxdist);
+    DEBUG_TRACEPOINT("MAX dist within node: %d - %d = %g",
+                     maxdistindex0,
+                     maxdistindex1,
+                     maxdist);
 
-    DEBUG_TRACEPOINT("CREATE NODES POINTING TO PARENT %ld", ctree->CFarray[CFindex].parentindex);
+    DEBUG_TRACEPOINT("CREATE NODES POINTING TO PARENT %ld",
+                     ctree->CFarray[CFindex].parentindex);
     // create two new nodes
     // find next available CFarray index
     long CFindex0 = 0;
@@ -126,7 +135,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     // leafs will be split between CFindex0 and CFindex1
 
     // destination CF
-    long *destCF = (long *)malloc(sizeof(long) * nCF);
+    long *destCF = (long *) malloc(sizeof(long) * nCF);
     if (destCF == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
@@ -154,18 +163,25 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     for (int subindex = 0; subindex < nCF; subindex++)
     {
 
-        DEBUG_TRACEPOINT("(LEAF)NODE %2d  %12g %12g -> ADD TO (LEAF)NODE %ld", subindex,
-                         distarray[maxdistindex0 * nCF + subindex], distarray[maxdistindex1 * nCF + subindex],
+        DEBUG_TRACEPOINT("(LEAF)NODE %2d  %12g %12g -> ADD TO (LEAF)NODE %ld",
+                         subindex,
+                         distarray[maxdistindex0 * nCF + subindex],
+                         distarray[maxdistindex1 * nCF + subindex],
                          destCF[subindex]);
 
         if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
         {
             FUNC_CHECK_RETURN(
-                leafnode_attachleaf(ctree, ctree->CFarray[CFindex].leafindex[subindex], destCF[subindex]));
+                leafnode_attachleaf(ctree,
+                                    ctree->CFarray[CFindex].leafindex[subindex],
+                                    destCF[subindex]));
         }
         else
         {
-            FUNC_CHECK_RETURN(node_attachnode(ctree, ctree->CFarray[CFindex].childindex[subindex], destCF[subindex]));
+            FUNC_CHECK_RETURN(
+                node_attachnode(ctree,
+                                ctree->CFarray[CFindex].childindex[subindex],
+                                destCF[subindex]));
         }
     }
 

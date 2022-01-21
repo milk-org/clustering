@@ -14,7 +14,8 @@ errno_t printCFtree(CLUSTERTREE *ctree)
     {
         for (int CFindex = 0; CFindex < ctree->NBCF; CFindex++)
         {
-            if ((ctree->CFarray[CFindex].type != CLUSTER_CF_TYPE_UNUSED) && (ctree->CFarray[CFindex].level == level))
+            if ((ctree->CFarray[CFindex].type != CLUSTER_CF_TYPE_UNUSED) &&
+                (ctree->CFarray[CFindex].level == level))
             {
                 for (int l = 0; l < ctree->CFarray[CFindex].level; l++)
                 {
@@ -53,16 +54,19 @@ errno_t printCFtree(CLUSTERTREE *ctree)
                 }
 
                 printf("  N=%5ld", ctree->CFarray[CFindex].N);
-                printf("  %10.4g %10.4g", (double)ctree->CFarray[CFindex].datassq,
-                       (double)ctree->CFarray[CFindex].sum2);
-                printf("    R=%6.4f ", sqrt(ctree->CFarray[CFindex].radius2) / ctree->T);
+                printf("  %10.4g %10.4g",
+                       (double) ctree->CFarray[CFindex].datassq,
+                       (double) ctree->CFarray[CFindex].sum2);
+                printf("    R=%6.4f ",
+                       sqrt(ctree->CFarray[CFindex].radius2) / ctree->T);
 
                 printf(" parent=%3ld", ctree->CFarray[CFindex].parentindex);
 
                 if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_NODE)
                 {
                     printf("  %3d children (", ctree->CFarray[CFindex].NBchild);
-                    for (int chi = 0; chi < ctree->CFarray[CFindex].NBchild; chi++)
+                    for (int chi = 0; chi < ctree->CFarray[CFindex].NBchild;
+                         chi++)
                     {
                         printf(" %ld", ctree->CFarray[CFindex].childindex[chi]);
                     }
@@ -72,7 +76,8 @@ errno_t printCFtree(CLUSTERTREE *ctree)
                 if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
                 {
                     printf("  %3d leaves (", ctree->CFarray[CFindex].NBleaf);
-                    for (int lfi = 0; lfi < ctree->CFarray[CFindex].NBleaf; lfi++)
+                    for (int lfi = 0; lfi < ctree->CFarray[CFindex].NBleaf;
+                         lfi++)
                     {
                         printf(" %ld", ctree->CFarray[CFindex].leafindex[lfi]);
                     }
@@ -86,7 +91,8 @@ errno_t printCFtree(CLUSTERTREE *ctree)
     printf("Characteristic distance = %g\n", ctree->cdist);
     printf("Minimum noise2          = %g\n", ctree->minnoise2);
     printf("Distance count      %lld\n", ctree->cdistcnt);
-    printf("Negative distance   %lld (fraction = %f)\n", ctree->cdistnegcnt,
+    printf("Negative distance   %lld (fraction = %f)\n",
+           ctree->cdistnegcnt,
            1.0 * ctree->cdistnegcnt / ctree->cdistcnt);
 
     printf("\n\n");
