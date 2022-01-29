@@ -742,7 +742,7 @@ static errno_t compute_function()
 {
     DEBUG_TRACE_FSTART();
 
-    imcube_makecluster(makeIMGID(farg_inimname), farg_outdname);
+    imcube_makecluster(mkIMGID_from_name(farg_inimname), farg_outdname);
 
     DEBUG_TRACE_FEXIT();
     return RETURN_SUCCESS;

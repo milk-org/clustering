@@ -408,7 +408,9 @@ static errno_t compute_function()
 {
     DEBUG_TRACE_FSTART();
 
-    imcube_mindiffscan(makeIMGID(farg_inimname), farg_outdname, *farg_kNNsize);
+    imcube_mindiffscan(mkIMGID_from_name(farg_inimname),
+                       farg_outdname,
+                       *farg_kNNsize);
 
     DEBUG_TRACE_FEXIT();
     return RETURN_SUCCESS;
