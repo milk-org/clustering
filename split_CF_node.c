@@ -27,7 +27,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     DEBUG_TRACE_FSTART();
     DEBUG_TRACEPOINT("FARG %ld", CFindex);
 
-    if (ctree->rootindex == CFindex)
+    if(ctree->rootindex == CFindex)
     {
         droptree(ctree);
     }
@@ -39,52 +39,52 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     int    maxdistindex0, maxdistindex1;
 
     long nCF; // number of CF entries to split
-    switch (ctree->CFarray[CFindex].type)
+    switch(ctree->CFarray[CFindex].type)
     {
-    case CLUSTER_CF_TYPE_LEAFNODE:
-        nCF = ctree->CFarray[CFindex].NBleaf;
-        break;
+        case CLUSTER_CF_TYPE_LEAFNODE:
+            nCF = ctree->CFarray[CFindex].NBleaf;
+            break;
 
-    case CLUSTER_CF_TYPE_NODE:
-        nCF = ctree->CFarray[CFindex].NBchild;
-        break;
+        case CLUSTER_CF_TYPE_NODE:
+            nCF = ctree->CFarray[CFindex].NBchild;
+            break;
 
-    default:
-        FUNC_RETURN_FAILURE("type = %d not valid",
-                            ctree->CFarray[CFindex].type);
+        default:
+            FUNC_RETURN_FAILURE("type = %d not valid",
+                                ctree->CFarray[CFindex].type);
     }
 
     long *subCFarray = (long *) malloc(sizeof(long) * nCF);
-    if (subCFarray == NULL)
+    if(subCFarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
     }
-    if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
+    if(ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
     {
-        for (long i = 0; i < nCF; i++)
+        for(long i = 0; i < nCF; i++)
         {
             subCFarray[i] = ctree->CFarray[CFindex].leafindex[i];
         }
     }
     else
     {
-        for (long i = 0; i < nCF; i++)
+        for(long i = 0; i < nCF; i++)
         {
             subCFarray[i] = ctree->CFarray[CFindex].childindex[i];
         }
     }
 
     double *distarray = (double *) malloc(sizeof(double) * nCF * nCF);
-    if (distarray == NULL)
+    if(distarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
     }
 
-    for (int index0 = 0; index0 < nCF; index0++)
+    for(int index0 = 0; index0 < nCF; index0++)
     {
         distarray[index0 * nCF + index0] = 0.0;
         long CFindex00                   = subCFarray[index0];
-        for (int index1 = index0 + 1; index1 < nCF; index1++)
+        for(int index1 = index0 + 1; index1 < nCF; index1++)
         {
             long   CFindex11 = subCFarray[index1];
             double distval;
@@ -96,7 +96,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
                                           ctree->CFarray[CFindex11].N,
                                           &distval));
             DEBUG_TRACEPOINT("DIST %02d %02d  %g\n", index0, index1, distval);
-            if (distval > maxdist)
+            if(distval > maxdist)
             {
                 maxdist       = distval;
                 maxdistindex0 = index0;
@@ -136,19 +136,19 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
 
     // destination CF
     long *destCF = (long *) malloc(sizeof(long) * nCF);
-    if (destCF == NULL)
+    if(destCF == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
     }
 
     long cnt0 = 0;
     long cnt1 = 0;
-    for (int subindex = 0; subindex < nCF; subindex++)
+    for(int subindex = 0; subindex < nCF; subindex++)
     {
         double dist0 = distarray[maxdistindex0 * nCF + subindex];
         double dist1 = distarray[maxdistindex1 * nCF + subindex];
 
-        if ((dist0 <= dist1) && (cnt0 < nCF - 1))
+        if((dist0 <= dist1) && (cnt0 < nCF - 1))
         {
             destCF[subindex] = CFindex0;
             cnt0++;
@@ -160,7 +160,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
         }
     }
 
-    for (int subindex = 0; subindex < nCF; subindex++)
+    for(int subindex = 0; subindex < nCF; subindex++)
     {
 
         DEBUG_TRACEPOINT("(LEAF)NODE %2d  %12g %12g -> ADD TO (LEAF)NODE %ld",
@@ -169,7 +169,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
                          distarray[maxdistindex1 * nCF + subindex],
                          destCF[subindex]);
 
-        if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
+        if(ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
         {
             FUNC_CHECK_RETURN(
                 leafnode_attachleaf(ctree,
@@ -191,7 +191,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
     free(subCFarray);
 
     // release input leafnode
-    if (ctree->rootindex == CFindex)
+    if(ctree->rootindex == CFindex)
     {
         FUNC_RETURN_FAILURE("cannot release root node %ld", CFindex);
     }
@@ -203,7 +203,7 @@ errno_t split_CF_node(CLUSTERTREE *ctree, long CFindex, long *CFi0, long *CFi1)
 
     FUNC_CHECK_RETURN(CFmeminit(ctree, CFindex, CFMEMINIT_CFUPDATE));
 
-    if (CFiparent != -1)
+    if(CFiparent != -1)
     {
         // attach node to parent
         DEBUG_TRACEPOINT("attach to parent %ld", CFiparent);

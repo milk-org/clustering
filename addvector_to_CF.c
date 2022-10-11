@@ -17,7 +17,7 @@ errno_t addvector_to_CF(CLUSTERTREE *ctree,
     double sum2 = 0.0;
 
     // add to vec sum
-    for (long ii = 0; ii < ctree->npix; ii++)
+    for(long ii = 0; ii < ctree->npix; ii++)
     {
         sumvec[ii] = ctree->CFarray[CFindex].datasumvec[ii] + datavec[ii];
         sum2 += sumvec[ii] * sumvec[ii];
@@ -30,11 +30,11 @@ errno_t addvector_to_CF(CLUSTERTREE *ctree,
     long double tmpv2   = sum2 / (N1 * N1);
     double      radius2 = tmpv1 - tmpv2;
 
-    if ((radius2 < ctree->T * ctree->T) || (*addOK == 1))
+    if((radius2 < ctree->T * ctree->T) || (*addOK == 1))
     {
         *addOK = 1;
 
-        for (long ii = 0; ii < ctree->npix; ii++)
+        for(long ii = 0; ii < ctree->npix; ii++)
         {
             ctree->CFarray[CFindex].datasumvec[ii] = sumvec[ii];
         }
@@ -64,7 +64,7 @@ errno_t subvector_to_CF(
 
     // sub to vec sum
     ctree->CFarray[CFindex].sum2 = 0.0;
-    for (long ii = 0; ii < ctree->npix; ii++)
+    for(long ii = 0; ii < ctree->npix; ii++)
     {
         ctree->CFarray[CFindex].datasumvec[ii] -= datavec[ii];
         ctree->CFarray[CFindex].sum2 += ctree->CFarray[CFindex].datasumvec[ii] *

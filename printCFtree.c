@@ -10,18 +10,18 @@ errno_t printCFtree(CLUSTERTREE *ctree)
 
     printf("\n\n");
 
-    for (int level = 0; level < 100; level++)
+    for(int level = 0; level < 100; level++)
     {
-        for (int CFindex = 0; CFindex < ctree->NBCF; CFindex++)
+        for(int CFindex = 0; CFindex < ctree->NBCF; CFindex++)
         {
-            if ((ctree->CFarray[CFindex].type != CLUSTER_CF_TYPE_UNUSED) &&
-                (ctree->CFarray[CFindex].level == level))
+            if((ctree->CFarray[CFindex].type != CLUSTER_CF_TYPE_UNUSED) &&
+                    (ctree->CFarray[CFindex].level == level))
             {
-                for (int l = 0; l < ctree->CFarray[CFindex].level; l++)
+                for(int l = 0; l < ctree->CFarray[CFindex].level; l++)
                 {
                     printf("    ");
                 }
-                if (ctree->CFarray[CFindex].status && CLUSTER_CF_STATUS_UPDATE)
+                if(ctree->CFarray[CFindex].status && CLUSTER_CF_STATUS_UPDATE)
                 {
                     printf("*");
                 }
@@ -31,26 +31,26 @@ errno_t printCFtree(CLUSTERTREE *ctree)
                 }
                 printf("[%3d] ", CFindex);
 
-                switch (ctree->CFarray[CFindex].type)
+                switch(ctree->CFarray[CFindex].type)
                 {
-                case CLUSTER_CF_TYPE_ROOT:
-                    printf("ROOT");
-                    break;
+                    case CLUSTER_CF_TYPE_ROOT:
+                        printf("ROOT");
+                        break;
 
-                case CLUSTER_CF_TYPE_NODE:
-                    printf("NODE");
-                    break;
+                    case CLUSTER_CF_TYPE_NODE:
+                        printf("NODE");
+                        break;
 
-                case CLUSTER_CF_TYPE_LEAF:
-                    printf("LEAF");
-                    break;
+                    case CLUSTER_CF_TYPE_LEAF:
+                        printf("LEAF");
+                        break;
 
-                case CLUSTER_CF_TYPE_LEAFNODE:
-                    printf("LFND");
-                    break;
+                    case CLUSTER_CF_TYPE_LEAFNODE:
+                        printf("LFND");
+                        break;
 
-                default:
-                    printf("????");
+                    default:
+                        printf("????");
                 }
 
                 printf("  N=%5ld", ctree->CFarray[CFindex].N);
@@ -62,22 +62,22 @@ errno_t printCFtree(CLUSTERTREE *ctree)
 
                 printf(" parent=%3ld", ctree->CFarray[CFindex].parentindex);
 
-                if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_NODE)
+                if(ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_NODE)
                 {
                     printf("  %3d children (", ctree->CFarray[CFindex].NBchild);
-                    for (int chi = 0; chi < ctree->CFarray[CFindex].NBchild;
-                         chi++)
+                    for(int chi = 0; chi < ctree->CFarray[CFindex].NBchild;
+                            chi++)
                     {
                         printf(" %ld", ctree->CFarray[CFindex].childindex[chi]);
                     }
                     printf(")");
                 }
 
-                if (ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
+                if(ctree->CFarray[CFindex].type == CLUSTER_CF_TYPE_LEAFNODE)
                 {
                     printf("  %3d leaves (", ctree->CFarray[CFindex].NBleaf);
-                    for (int lfi = 0; lfi < ctree->CFarray[CFindex].NBleaf;
-                         lfi++)
+                    for(int lfi = 0; lfi < ctree->CFarray[CFindex].NBleaf;
+                            lfi++)
                     {
                         printf(" %ld", ctree->CFarray[CFindex].leafindex[lfi]);
                     }

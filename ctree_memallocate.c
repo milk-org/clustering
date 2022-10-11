@@ -15,31 +15,31 @@ errno_t ctree_memallocate(CLUSTERTREE *ctree)
 
     ctree->CFarray =
         (CLUSTERING_CF *) malloc(sizeof(CLUSTERING_CF) * ctree->NBCF);
-    if (ctree->CFarray == NULL)
+    if(ctree->CFarray == NULL)
     {
         FUNC_RETURN_FAILURE("malloc error");
     }
 
-    for (long CFindex = 0; CFindex < ctree->NBCF; CFindex++)
+    for(long CFindex = 0; CFindex < ctree->NBCF; CFindex++)
     {
 
         ctree->CFarray[CFindex].childindex =
             (long *) malloc(sizeof(long) * (ctree->B + 1));
-        if (ctree->CFarray[CFindex].childindex == NULL)
+        if(ctree->CFarray[CFindex].childindex == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }
 
         ctree->CFarray[CFindex].leafindex =
             (long *) malloc(sizeof(long) * (ctree->L + 1));
-        if (ctree->CFarray[CFindex].leafindex == NULL)
+        if(ctree->CFarray[CFindex].leafindex == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }
 
         ctree->CFarray[CFindex].datasumvec =
             (double *) malloc(sizeof(double) * ctree->npix);
-        if (ctree->CFarray[CFindex].datasumvec == NULL)
+        if(ctree->CFarray[CFindex].datasumvec == NULL)
         {
             FUNC_RETURN_FAILURE("malloc error");
         }

@@ -25,11 +25,11 @@ errno_t leaf_addentry(CLUSTERTREE *ctree,
     DEBUG_TRACE_FSTART();
 
     long cfi = lCFindex;
-    while (cfi != -1)
+    while(cfi != -1)
     {
         addvector_to_CF(ctree, datavec, ssqr, 1, cfi, addOK);
 
-        if (*addOK == 1)
+        if(*addOK == 1)
         {
             ctree->CFarray[cfi].status |= CLUSTER_CF_STATUS_UPDATE;
             // move upstream to propagate change

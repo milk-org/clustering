@@ -21,18 +21,18 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
 
     *nbop = 0;
 
-    for (long cfi = 0; cfi < ctree->NBCF; cfi++)
+    for(long cfi = 0; cfi < ctree->NBCF; cfi++)
     {
-        if (ctree->CFarray[cfi].type == CLUSTER_CF_TYPE_NODE)
+        if(ctree->CFarray[cfi].type == CLUSTER_CF_TYPE_NODE)
         {
             // count nb childred and grandchildren
             long nbgchild = 0;
 
-            for (int chi = 0; chi < ctree->CFarray[cfi].NBchild; chi++)
+            for(int chi = 0; chi < ctree->CFarray[cfi].NBchild; chi++)
             {
                 long cfic = ctree->CFarray[cfi].childindex[chi];
 
-                if (ctree->CFarray[cfic].type == CLUSTER_CF_TYPE_NODE)
+                if(ctree->CFarray[cfic].type == CLUSTER_CF_TYPE_NODE)
                 {
                     int ngchi = ctree->CFarray[cfic].NBchild;
                     nbgchild += ngchi;
@@ -44,7 +44,7 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
                 }
             }
 
-            if ((nbgchild > 0) && (nbgchild < ctree->B))
+            if((nbgchild > 0) && (nbgchild < ctree->B))
             {
                 printf(
                     "CONDENSING: NODE %5ld LEVEL %d    #child=%5d -> "
@@ -56,12 +56,12 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
 
                 long  gchildcnt = 0;
                 long *gchiCFi   = (long *) malloc(sizeof(long) * nbgchild);
-                if (gchiCFi == NULL)
+                if(gchiCFi == NULL)
                 {
                     FUNC_RETURN_FAILURE("malloc error");
                 }
 
-                for (int chi = 0; chi < ctree->CFarray[cfi].NBchild; chi++)
+                for(int chi = 0; chi < ctree->CFarray[cfi].NBchild; chi++)
                 {
                     long cfic = ctree->CFarray[cfi].childindex[chi];
 #ifdef DEBUGPRINT
@@ -76,7 +76,7 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
 #endif
 
                     int ngchi = ctree->CFarray[cfic].NBchild;
-                    for (int gchi = 0; gchi < ngchi; gchi++)
+                    for(int gchi = 0; gchi < ngchi; gchi++)
                     {
                         long gchiCFindex =
                             ctree->CFarray[cfic].childindex[gchi];
@@ -94,7 +94,7 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
 
                 // update number of child
                 ctree->CFarray[cfi].NBchild = gchildcnt;
-                for (long gchi = 0; gchi < gchildcnt; gchi++)
+                for(long gchi = 0; gchi < gchildcnt; gchi++)
                 {
 #ifdef DEBUGPRINT
                     printf("%s      node %5ld new parent is %5ld\n",
@@ -116,7 +116,7 @@ errno_t ctree_condense(CLUSTERTREE *ctree, int *nbop)
                 *nbop = 1;
             }
 
-            if (*nbop > 0)
+            if(*nbop > 0)
             {
                 // return from function
                 // only one condense operation at a time

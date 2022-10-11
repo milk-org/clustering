@@ -18,7 +18,7 @@ leafnode_attachleaf(CLUSTERTREE *ctree, long CFindexleaf, long CFindexleafnode)
     DEBUG_TRACE_FSTART();
 
     ctree->CFarray[CFindexleafnode]
-        .leafindex[ctree->CFarray[CFindexleafnode].NBleaf] = CFindexleaf;
+    .leafindex[ctree->CFarray[CFindexleafnode].NBleaf] = CFindexleaf;
     ctree->CFarray[CFindexleafnode].NBleaf++;
 
     ctree->CFarray[CFindexleaf].parentindex = CFindexleafnode;
@@ -26,7 +26,7 @@ leafnode_attachleaf(CLUSTERTREE *ctree, long CFindexleaf, long CFindexleafnode)
         ctree->CFarray[CFindexleafnode].level + 1;
 
     long cfi = CFindexleafnode;
-    while (cfi != -1)
+    while(cfi != -1)
     {
         //printf("========= ADDING VECTOR TO NODE %ld (%s)\n", cfi, __FILE__);
         //fflush(stdout);
@@ -44,7 +44,7 @@ leafnode_attachleaf(CLUSTERTREE *ctree, long CFindexleaf, long CFindexleafnode)
         // move upstream to propagate change
 
         long cfip = ctree->CFarray[cfi].parentindex;
-        if (cfi == cfip)
+        if(cfi == cfip)
         {
             FUNC_RETURN_FAILURE(
                 "Attaching leaf %ld to node %ld: CF parent %ld points to "

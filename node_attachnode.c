@@ -9,7 +9,7 @@ errno_t node_attachnode(CLUSTERTREE *ctree, long CFindex, long CFindexupnode)
     DEBUG_TRACE_FSTART();
 
     ctree->CFarray[CFindexupnode]
-        .childindex[ctree->CFarray[CFindexupnode].NBchild] = CFindex;
+    .childindex[ctree->CFarray[CFindexupnode].NBchild] = CFindex;
     ctree->CFarray[CFindexupnode].NBchild++;
 
     ctree->CFarray[CFindex].parentindex = CFindexupnode;
@@ -17,7 +17,7 @@ errno_t node_attachnode(CLUSTERTREE *ctree, long CFindex, long CFindexupnode)
 
     {
         long cfi = CFindexupnode;
-        while (cfi != -1)
+        while(cfi != -1)
         {
             ctree->CFarray[cfi].status |= CLUSTER_CF_STATUS_UPDATE;
 

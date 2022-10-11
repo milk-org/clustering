@@ -5,7 +5,7 @@
 errno_t ctree_memfree(CLUSTERTREE *ctree)
 {
     DEBUG_TRACE_FSTART();
-    for (long CFindex = 0; CFindex < ctree->NBCF; CFindex++)
+    for(long CFindex = 0; CFindex < ctree->NBCF; CFindex++)
     {
         free(ctree->CFarray[CFindex].childindex);
         free(ctree->CFarray[CFindex].leafindex);
