@@ -11,7 +11,9 @@ static uint32_t *farg_kNNsize;
 
 // List of arguments to function
 //
-static CLICMDARGDEF farg[] = {{
+static CLICMDARGDEF farg[] =
+{
+    {
         CLIARG_IMG,
         ".in_name",
         "input image cube",
@@ -30,7 +32,7 @@ static CLICMDARGDEF farg[] = {{
         NULL
     },
     {
-        CLIARG_LONG,
+        CLIARG_INT64,
         ".kNNsize",
         "number of samples in cluster",
         "20",
